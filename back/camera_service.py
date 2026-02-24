@@ -5,12 +5,12 @@ import time
 # カメラオブジェクトをグローバルで保持し、一度だけ初期化する
 # Windows PCのWebカメラは通常インデックス 0
 # ⚠ 注意: 実際のラズパイでは異なる初期化が必要です
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(0, cv2.CAP_V4L2)
 
 # 解像度設定（高速化のため低解像度に設定）
 camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
 camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
-camera.set(cv2.CAP_PROP_FPS, 30)
+camera.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG')) # MJPG形式を指定
 
 def get_video_stream_generator():
     """FastAPIのStreamingResponseで使用するMJPEGフレームジェネレータ"""
